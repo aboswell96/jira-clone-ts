@@ -18,9 +18,7 @@ export const MainContent = () => {
     >
       <SideBar />
       <Navigation />
-      <div>
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };
