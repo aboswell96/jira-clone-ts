@@ -5,7 +5,6 @@ export const getAvatarStyling = (
   size: string,
   active: boolean
 ) => {
-  console.log(active);
   return css({
     display: "block",
     backgroundImage: `url(${backgroundImg})`,

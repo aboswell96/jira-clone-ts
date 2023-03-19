@@ -14,3 +14,24 @@ export const boardFilter = css({
   borderRadius: "3px",
   fontSize: "14.5px",
 });
+
+export const getBoardFilterStyles = (darkTheme: boolean, active: boolean) => {
+  return css([
+    {
+      backgroundColor: darkTheme ? "#010409" : "white",
+      userSelect: "none",
+      border: "none",
+      color: grey2,
+      borderRadius: "3px",
+      fontSize: "14.5px",
+      "&:hover": {
+        cursor: "pointer",
+        backgroundColor: darkTheme ? "#0d1117" : "#F4F5F7",
+      },
+    },
+    active && {
+      backgroundColor: darkTheme ? "#0d1117" : "#d2e5fe",
+      color: "#0052cc",
+    },
+  ]);
+};
