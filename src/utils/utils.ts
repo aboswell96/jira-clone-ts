@@ -1,5 +1,12 @@
 import { UserRepresentation } from "../types/users";
 
+export const processingUser = {
+  first_name: "Joey",
+  last_name: "Tribbiani",
+  photo_url: "https://i.ibb.co/vhJVFpQ/joey-tribbiani-3.jpg",
+  id: "2da8b05c-c121-11ed-afa1-0242ac120002",
+};
+
 export const swimlanes = [
   {
     title: "Backlog",

@@ -8,7 +8,7 @@ import { getAvatarStyling } from "../../../styles/common";
 import { Divider, Skeleton, Tooltip } from "@mui/material";
 import { Swimlane } from "./Swimlane";
 import { useTickets } from "../../../services/tickets";
-import { swimlanes } from "../../../utils/utils";
+import { processingUser, swimlanes } from "../../../utils/utils";
 
 export const BoardView = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -34,6 +34,23 @@ export const BoardView = () => {
   } = useUsers();
 
   const { isLoading: ticketsLoading, data: ticketData } = useTickets();
+
+  const filteredTickets = ticketData?.data.filter((ticket) => {
+    if (searchInput && ticket.title.toLowerCase().search(searchInput) === -1)
+      return false;
+
+    if (userFilter && userFilter !== ticket.user_id) return false;
+
+    if (onlyMyIssues && ticket.user_id !== processingUser.id) return false;
+
+    if (
+      recentlyUpdated &&
+      new Date().getTime() - ticket.last_updated > 24 * 60 * 60 * 1000
+    )
+      return false;
+
+    return true;
+  });
 
   const loadingUsers = [1, 2, 3, 4].map(() => {
     return <Skeleton variant="circular" width={32} height={32} />;
@@ -126,7 +143,7 @@ export const BoardView = () => {
           return (
             <Swimlane
               title={lane.title}
-              tickets={ticketData?.data.filter(
+              tickets={filteredTickets?.filter(
                 (ticket) => ticket.swimlane === lane.identifier
               )}
             />

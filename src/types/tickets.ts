@@ -7,8 +7,8 @@ export interface TicketRepresentation {
   id: string;
   user_id: string;
   reporter_id: string;
-  last_updated: string;
-  time_created: string;
+  last_updated: number;
+  time_created: number;
 }
 
 export interface TicketsRepresentation {
