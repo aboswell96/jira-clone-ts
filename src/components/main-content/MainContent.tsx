@@ -18,7 +18,16 @@ export const MainContent = () => {
     >
       <SideBar />
       <Navigation />
-      <Outlet />
+      <div
+        className={css({
+          marginLeft: "40px",
+          marginRight: "40px",
+          marginTop: "30px",
+          width: "100%",
+        })}
+      >
+        <Outlet />
+      </div>
     </div>
   );
 };

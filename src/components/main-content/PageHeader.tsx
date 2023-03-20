@@ -17,7 +17,6 @@ export const PageHeader = ({ projectName, pageName }: PageHeaderProps) => {
           whiteSpace: "nowrap",
           color: grey,
           fontSize: "15px",
-          marginTop: "30px",
         })}
       >
         {["Projects", projectName, pageName].join(" / ")}

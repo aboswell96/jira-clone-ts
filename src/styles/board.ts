@@ -35,3 +35,40 @@ export const getBoardFilterStyles = (darkTheme: boolean, active: boolean) => {
     },
   ]);
 };
+
+export const getSwimlaneStyling = (darkTheme: boolean, hovered: boolean) => {
+  return css([
+    {
+      backgroundColor: darkTheme ? "#0d1117" : "#f4f5f7",
+      border: darkTheme ? "#0d1117" : "#f4f5f7",
+      borderRadius: "2px",
+      outline: "none",
+      height: "100%",
+      width: "25%",
+      minWidth: "145px",
+      padding: "5px",
+    },
+    hovered && {
+      border: "5px solid #4c9aff",
+      borderRadius: "4px",
+    },
+  ]);
+};
+
+export const swimlaneHeader = css({
+  whiteSpace: "nowrap",
+  marginTop: "10px",
+  marginLeft: "10px",
+  color: "#5e6c84",
+  fontSize: "12.5px",
+});
+
+export const swimlaneBody = css({
+  display: "flex",
+  flexDirection: "column",
+  gap: "5px",
+  marginTop: "20px",
+  fontSize: "15px",
+  justifyContent: "flex-start",
+  width: "100%",
+});
