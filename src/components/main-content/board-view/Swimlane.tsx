@@ -11,11 +11,12 @@ import { TicketCard } from "../../common/TicketCard";
 interface SwimlaneProps {
   title: string;
   tickets?: TicketRepresentation[];
+  onTicketClick: any;
 }
 
-export const Swimlane = ({ title, tickets }: SwimlaneProps) => {
+export const Swimlane = ({ title, tickets, onTicketClick }: SwimlaneProps) => {
   const ticketCards = tickets?.map((ticket, i) => {
-    return <TicketCard ticket={ticket} />;
+    return <TicketCard ticket={ticket} onClick={onTicketClick} />;
   });
 
   return (

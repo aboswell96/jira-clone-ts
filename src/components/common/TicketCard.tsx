@@ -11,16 +11,19 @@ import { unassigned } from "../../utils/utils";
 
 interface TicketCardProps {
   ticket: TicketRepresentation;
+  onClick: any;
 }
 
-export const TicketCard = ({ ticket }: TicketCardProps) => {
-  console.log(ticket);
+export const TicketCard = ({ ticket, onClick }: TicketCardProps) => {
   const { isLoading, isError, data, error } = useUser(ticket.user_id);
 
-  console.log(data);
-
   return (
-    <div className={css(getTicketStyling(false))}>
+    <div
+      className={css(getTicketStyling(false))}
+      onClick={() => {
+        onClick(ticket.id);
+      }}
+    >
       {ticket.title}
       <div
         className={css({

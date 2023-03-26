@@ -9,12 +9,27 @@ import { Divider, Skeleton, Tooltip } from "@mui/material";
 import { Swimlane } from "./Swimlane";
 import { useTickets } from "../../../services/tickets";
 import { processingUser, swimlanes } from "../../../utils/utils";
+import { TicketModal } from "./TicketModal";
+import { TicketRepresentation } from "../../../types/tickets";
 
 export const BoardView = () => {
   const [searchInput, setSearchInput] = useState("");
   const [userFilter, setUserFilter] = useState("");
   const [onlyMyIssues, setOnlyMyIssues] = useState(false);
   const [recentlyUpdated, setRecentlyUpdated] = useState(false);
+
+  const [selectedTicket, setSelectedTicket] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const onTicketClick = (ticketId: string) => {
+    setOpen(true);
+    setSelectedTicket(ticketId);
+  };
+
+  const onModalClose = () => {
+    setOpen(false);
+    setSelectedTicket("");
+  };
 
   const filterActive =
     searchInput || onlyMyIssues || recentlyUpdated || userFilter;
@@ -146,10 +161,16 @@ export const BoardView = () => {
               tickets={filteredTickets?.filter(
                 (ticket) => ticket.swimlane === lane.identifier
               )}
+              onTicketClick={onTicketClick}
             />
           );
         })}
       </div>
+      <TicketModal
+        open={open}
+        ticketId={selectedTicket}
+        onModalClose={onModalClose}
+      />
     </div>
   );
 };

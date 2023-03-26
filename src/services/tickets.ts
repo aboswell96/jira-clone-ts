@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { TicketsRepresentation } from "../types/tickets";
+import { TicketRepresentation, TicketsRepresentation } from "../types/tickets";
 import { tickets } from "./apis";
 
 export const useTickets = () => {
@@ -7,4 +7,15 @@ export const useTickets = () => {
     const data = await fetch(tickets);
     return await data.json();
   });
+};
+
+export const useTicket = (ticketId: string) => {
+  return useQuery<TicketRepresentation>(
+    ["ticket", ticketId],
+    async () => {
+      const data = await fetch(tickets + "/" + ticketId);
+      return await data.json();
+    },
+    { enabled: !!ticketId }
+  );
 };

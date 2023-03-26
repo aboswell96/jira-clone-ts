@@ -13,7 +13,7 @@ export const getAvatarStyling = (
     backgroundSize: "cover",
     backgroundColor: "#ebecf0",
     borderRadius: "100%",
-    marginLeft: "auto",
+    // marginLeft: "auto",
     cursor: "pointer",
     height: size,
     width: size,
