@@ -10,7 +10,6 @@ import { Swimlane } from "./Swimlane";
 import { useTickets } from "../../../services/tickets";
 import { processingUser, swimlanes } from "../../../utils/utils";
 import { TicketModal } from "./TicketModal";
-import { TicketRepresentation } from "../../../types/tickets";
 
 export const BoardView = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -154,7 +153,7 @@ export const BoardView = () => {
           justifyContent: "flex-start",
         })}
       >
-        {swimlanes.map((lane, i) => {
+        {swimlanes.map((lane) => {
           return (
             <Swimlane
               title={lane.title}
@@ -162,6 +161,7 @@ export const BoardView = () => {
                 (ticket) => ticket.swimlane === lane.identifier
               )}
               onTicketClick={onTicketClick}
+              key={lane.identifier}
             />
           );
         })}

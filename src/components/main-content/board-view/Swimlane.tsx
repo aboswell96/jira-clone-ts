@@ -5,7 +5,6 @@ import {
   swimlaneHeader,
 } from "../../../styles/board";
 import { TicketRepresentation } from "../../../types/tickets";
-import { UserRepresentation } from "../../../types/users";
 import { TicketCard } from "../../common/TicketCard";
 
 interface SwimlaneProps {
@@ -21,7 +20,9 @@ export const Swimlane = ({ title, tickets, onTicketClick }: SwimlaneProps) => {
 
   return (
     <div className={css(getSwimlaneStyling(false, false))}>
-      <div className={swimlaneHeader}>{title.toLocaleUpperCase()}</div>
+      <div className={swimlaneHeader}>
+        {[title.toLocaleUpperCase(), ticketCards?.length].join(" ")}
+      </div>
       <div className={swimlaneBody}>{ticketCards}</div>
     </div>
   );

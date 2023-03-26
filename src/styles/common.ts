@@ -18,6 +18,7 @@ export const getAvatarStyling = (
     height: size,
     width: size,
     outline: active ? "3px solid #4c9aff" : "none",
+    flexShrink: 0,
   });
 };
 

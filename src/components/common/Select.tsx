@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { subTitle } from "../../styles/ticketModal";
 
 export interface SelectItem {

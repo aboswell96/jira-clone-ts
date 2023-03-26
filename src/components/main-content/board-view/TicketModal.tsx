@@ -30,6 +30,8 @@ import {
   getUserItems,
 } from "../../../utils/utils";
 import { useUsers } from "../../../services/users";
+import { CommentRepresentation } from "../../../types/tickets";
+import { CommentCard } from "../../common/CommentCard";
 
 interface TicketModalProps {
   ticketId: string;
@@ -115,6 +117,7 @@ export const TicketModal = ({
               initValue={ticket?.description}
               css={getTextAreaStyling("100%", "100px", "", "15px", "")}
             />
+            <CommentsSection comments={ticket?.comments} />
           </div>
           <div className={sidePanel}>
             <Select
@@ -182,4 +185,26 @@ const RenderTicketTypeIcon = (type?: string) => {
     default:
       return <BookmarkIcon sx={{ color: "#65ba43", fontSize: { fontSize } }} />;
   }
+};
+
+interface CommentsSectionProps {
+  comments?: CommentRepresentation[];
+}
+
+const CommentsSection = ({ comments }: CommentsSectionProps) => {
+  return (
+    <div
+      className={css({
+        display: "flex",
+        "flex-direction": "column",
+        gap: "25px",
+        paddingTop: "25px",
+      })}
+    >
+      <div className={mainText}>Comments</div>
+      {comments?.map((c) => {
+        return <CommentCard comment={c} />;
+      })}
+    </div>
+  );
 };
