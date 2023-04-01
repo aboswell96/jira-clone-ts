@@ -36,6 +36,7 @@ import { CommentCard } from "../../common/CommentCard";
 import { getAvatarStyling } from "../../../styles/common";
 import { useState } from "react";
 import { Button, getButtonStyling } from "../../common/Button";
+import { report } from "process";
 
 interface TicketModalProps {
   ticketId: string;
@@ -68,20 +69,17 @@ export const TicketModal = ({
   open,
   onModalClose,
 }: TicketModalProps) => {
-  const {
-    isLoading: ticketLoading,
-    isError,
-    data: ticket,
-    error,
-  } = useTicket(ticketId);
-
+  const { isLoading: ticketLoading, data: ticket } = useTicket(ticketId);
   const { isLoading: usersLoading, data: userData } = useUsers();
-  const mutation = useUpdateTicketById();
-  console.log(ticket);
+
+  const [title, setTitle] = useState(ticket?.title);
+  const [description, setDescription] = useState(ticket?.description);
+
+  const updateTicketmutation = useUpdateTicketById();
 
   const updateTicket = (key: string, newVal: string): void => {
     if (ticket) {
-      mutation.mutate({
+      updateTicketmutation.mutate({
         ticketId: ticketId,
         newTicket: { ...ticket, [key]: newVal },
       });
@@ -136,7 +134,7 @@ export const TicketModal = ({
           <div className={sidePanel}>
             <Select
               header="Issue Type"
-              initValue={ticket?.type}
+              value={ticket?.type || ""}
               items={getIssueTypeItems()}
               onSelectItem={(newVal: string) => {
                 updateTicket("type", newVal);
@@ -144,7 +142,7 @@ export const TicketModal = ({
             />
             <Select
               header="Status"
-              initValue={ticket?.swimlane}
+              value={ticket?.swimlane || ""}
               items={getIssueStatusItems()}
               onSelectItem={(newVal: string) => {
                 updateTicket("swimlane", newVal);
@@ -153,7 +151,7 @@ export const TicketModal = ({
             {!usersLoading && (
               <Select
                 header="Assignee"
-                initValue={ticket?.user_id || "-1"}
+                value={ticket?.user_id || "-1"}
                 items={getUserItems(userData?.data!)}
                 onSelectItem={(newVal: string) => {
                   updateTicket("user_id", newVal);
@@ -163,7 +161,7 @@ export const TicketModal = ({
             {!usersLoading && (
               <Select
                 header="Reporter"
-                initValue={ticket?.user_id || "-1"}
+                value={ticket?.reporter_id || "-1"}
                 items={getUserItems(userData?.data!)}
                 onSelectItem={(newVal: string) => {
                   updateTicket("reporter_id", newVal);
@@ -172,7 +170,7 @@ export const TicketModal = ({
             )}
             <Select
               header="Priority"
-              initValue={ticket?.priority}
+              value={ticket?.priority || ""}
               items={getIssuePriorityItems()}
               onSelectItem={(newVal: string) => {
                 updateTicket("priority", newVal);
@@ -248,7 +246,7 @@ const CommentsSection = ({ comments }: CommentsSectionProps) => {
       <div
         className={css({
           display: "flex",
-          "flex-direction": "column",
+          flexDirection: "column",
           gap: "25px",
           paddingTop: "25px",
         })}

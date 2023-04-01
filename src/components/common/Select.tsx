@@ -9,7 +9,7 @@ export interface SelectItem {
 }
 
 export interface SelectProps {
-  initValue?: string;
+  value?: string;
   items?: SelectItem[];
   header: string;
   onSelectItem: (itemId: string) => any;
@@ -34,18 +34,10 @@ const itemStyle = css({
   height: "inherit",
 });
 
-export const Select = ({
-  initValue,
-  items,
-  header,
-  onSelectItem,
-}: SelectProps) => {
-  const [value, setValue] = useState(initValue);
+export const Select = ({ value, items, header, onSelectItem }: SelectProps) => {
   const [expanded, setExpanded] = useState(false);
-
-  console.log(initValue);
-  console.log(items);
-
+  // console.log(value);
+  // console.log(items);
   return (
     <div>
       <div className={subTitle}>{header}</div>
@@ -57,8 +49,8 @@ export const Select = ({
       >
         <div className={currentValue}>
           <div className={itemStyle}>
-            {items?.filter((i) => i.id === value)[0]?.img}
-            {items?.filter((i) => i.id === value)[0].text}
+            {items?.filter((i) => i.id === value)?.[0]?.img}
+            {items?.filter((i) => i.id === value)?.[0]?.text}
           </div>
         </div>
         <div>
@@ -72,7 +64,7 @@ export const Select = ({
                   <div
                     className={currentValue}
                     onClick={() => {
-                      setValue(item.id);
+                      // setValue(item.id);
                       onSelectItem(item.id);
                     }}
                     key={item.id}
