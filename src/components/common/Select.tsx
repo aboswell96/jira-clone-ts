@@ -43,6 +43,9 @@ export const Select = ({
   const [value, setValue] = useState(initValue);
   const [expanded, setExpanded] = useState(false);
 
+  console.log(initValue);
+  console.log(items);
+
   return (
     <div>
       <div className={subTitle}>{header}</div>
@@ -73,7 +76,7 @@ export const Select = ({
                       onSelectItem(item.id);
                     }}
                     key={item.id}
-                    style={{ position: "absolute" }}
+                    // style={{ position: "absolute" }}
                   >
                     <div className={itemStyle}>
                       {item?.img}

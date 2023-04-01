@@ -7,9 +7,14 @@ export const topRow = css({
   gap: "10px",
 });
 
-export const ticketPanels = css({ display: "flex", flexDirection: "row" });
+export const ticketPanels = css({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  gap: "25px",
+});
 
-export const mainPanel = css({ width: "65%" });
+export const mainPanel = css({ width: "100%" });
 
 export const sidePanel = css({ width: "35%", marginLeft: "50px" });
 

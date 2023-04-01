@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { queryClient } from "..";
 import { TicketRepresentation, TicketsRepresentation } from "../types/tickets";
 import { tickets } from "./apis";
 
@@ -18,4 +19,33 @@ export const useTicket = (ticketId: string) => {
     },
     { enabled: !!ticketId }
   );
+};
+
+interface TicketMutationVariables {
+  newTicket: TicketRepresentation;
+  ticketId: string;
+}
+
+export const useUpdateTicketById = () => {
+  const updateTicketById = async (variables: TicketMutationVariables) => {
+    delete variables.newTicket["comments"];
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(variables.newTicket),
+    };
+    const response = await fetch(
+      tickets + "/" + variables.ticketId,
+      requestOptions
+    );
+
+    return await response.json();
+  };
+
+  return useMutation(updateTicketById, {
+    onSuccess: (variables) => {
+      queryClient.invalidateQueries(["tickets"]);
+      queryClient.invalidateQueries(["ticket", variables.ticketId]);
+    },
+  });
 };

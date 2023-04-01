@@ -7,7 +7,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { useTicket } from "../../../services/tickets";
+import { useTicket, useUpdateTicketById } from "../../../services/tickets";
 import moment from "moment";
 import {
   mainPanel,
@@ -28,10 +28,14 @@ import {
   getIssueStatusItems,
   getIssueTypeItems,
   getUserItems,
+  processingUser,
 } from "../../../utils/utils";
 import { useUsers } from "../../../services/users";
 import { CommentRepresentation } from "../../../types/tickets";
 import { CommentCard } from "../../common/CommentCard";
+import { getAvatarStyling } from "../../../styles/common";
+import { useState } from "react";
+import { Button, getButtonStyling } from "../../common/Button";
 
 interface TicketModalProps {
   ticketId: string;
@@ -45,10 +49,9 @@ const style = {
   left: "50%",
   pt: 25 / 8,
   pr: 35 / 8,
-  pb: 60 / 8,
+  pb: 25 / 8,
   pl: 35 / 8,
-  width: "55%",
-  minWidth: 550,
+  minWidth: 750,
   //   bgcolor: darkTheme ? "#010409" : "background.paper",
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -56,6 +59,8 @@ const style = {
   transform: "translate(-50%, -50%)",
   //   border: darkTheme ? "2px solid white" : "",
   border: "",
+  overflowY: "scroll",
+  maxHeight: "90%",
 };
 
 export const TicketModal = ({
@@ -71,8 +76,17 @@ export const TicketModal = ({
   } = useTicket(ticketId);
 
   const { isLoading: usersLoading, data: userData } = useUsers();
-
+  const mutation = useUpdateTicketById();
   console.log(ticket);
+
+  const updateTicket = (key: string, newVal: string): void => {
+    if (ticket) {
+      mutation.mutate({
+        ticketId: ticketId,
+        newTicket: { ...ticket, [key]: newVal },
+      });
+    }
+  };
 
   return !ticketLoading ? (
     <Modal
@@ -80,6 +94,7 @@ export const TicketModal = ({
       onClose={() => {
         onModalClose();
       }}
+      className={css({ overflow: "scroll" })}
     >
       <Box sx={style}>
         <div className={topRow}>
@@ -117,42 +132,41 @@ export const TicketModal = ({
               initValue={ticket?.description}
               css={getTextAreaStyling("100%", "100px", "", "15px", "")}
             />
-            <CommentsSection comments={ticket?.comments} />
           </div>
           <div className={sidePanel}>
             <Select
               header="Issue Type"
               initValue={ticket?.type}
               items={getIssueTypeItems()}
-              onSelectItem={() => {
-                return;
+              onSelectItem={(newVal: string) => {
+                updateTicket("type", newVal);
               }}
             />
             <Select
               header="Status"
               initValue={ticket?.swimlane}
               items={getIssueStatusItems()}
-              onSelectItem={() => {
-                return;
+              onSelectItem={(newVal: string) => {
+                updateTicket("swimlane", newVal);
               }}
             />
             {!usersLoading && (
               <Select
                 header="Assignee"
-                initValue={ticket?.user_id}
+                initValue={ticket?.user_id || "-1"}
                 items={getUserItems(userData?.data!)}
-                onSelectItem={() => {
-                  return;
+                onSelectItem={(newVal: string) => {
+                  updateTicket("user_id", newVal);
                 }}
               />
             )}
             {!usersLoading && (
               <Select
                 header="Reporter"
-                initValue={ticket?.user_id}
+                initValue={ticket?.user_id || "-1"}
                 items={getUserItems(userData?.data!)}
-                onSelectItem={() => {
-                  return;
+                onSelectItem={(newVal: string) => {
+                  updateTicket("reporter_id", newVal);
                 }}
               />
             )}
@@ -160,16 +174,17 @@ export const TicketModal = ({
               header="Priority"
               initValue={ticket?.priority}
               items={getIssuePriorityItems()}
-              onSelectItem={() => {
-                return;
+              onSelectItem={(newVal: string) => {
+                updateTicket("priority", newVal);
               }}
             />
           </div>
         </div>
+        <CommentsSection comments={ticket?.comments} />
       </Box>
     </Modal>
   ) : (
-    <div>Loading</div>
+    <div />
   );
 };
 
@@ -187,24 +202,110 @@ const RenderTicketTypeIcon = (type?: string) => {
   }
 };
 
+const inputStyling = css({
+  width: "100%",
+  height: "44px",
+  fontSize: "15px",
+  backgroundColor: "white",
+  border: "1px solid #dfe1e6",
+  borderRadius: "4px",
+  outline: "none",
+  paddingTop: "1px",
+  color: "#172b4d",
+  cursor: "pointer",
+  "&:hover": {
+    border: "1px solid #c1c7d0",
+  },
+  "&:focus": {
+    backgroundColor: "white",
+    border: "2px solid #4c9aff",
+    paddingTop: "0",
+    paddingLeft: "1px",
+    paddingRight: "1px",
+    paddingBottom: "0",
+  },
+});
+
 interface CommentsSectionProps {
   comments?: CommentRepresentation[];
 }
 
 const CommentsSection = ({ comments }: CommentsSectionProps) => {
+  const [newComment, setNewComment] = useState("");
+  const [editting, setEditting] = useState(false);
+
+  const onSave = () => {
+    setEditting(false);
+  };
+
+  const onCancel = () => {
+    setNewComment("");
+    setEditting(false);
+  };
+
   return (
-    <div
-      className={css({
-        display: "flex",
-        "flex-direction": "column",
-        gap: "25px",
-        paddingTop: "25px",
-      })}
-    >
-      <div className={mainText}>Comments</div>
-      {comments?.map((c) => {
-        return <CommentCard comment={c} />;
-      })}
+    <div>
+      <div
+        className={css({
+          display: "flex",
+          "flex-direction": "column",
+          gap: "25px",
+          paddingTop: "25px",
+        })}
+      >
+        <div className={mainText}>Comments</div>
+        {comments?.map((c) => {
+          return <CommentCard comment={c} />;
+        })}
+        <div
+          className={css({
+            display: "flex",
+            flexDirection: "row",
+            gap: "25px",
+          })}
+        >
+          <div
+            className={getAvatarStyling(
+              processingUser.photo_url,
+              "32px",
+              false
+            )}
+          />
+          <div
+            className={css({
+              display: "flex",
+              flexDirection: "column",
+              gap: "0",
+              width: "100%",
+            })}
+          >
+            <input
+              value={newComment}
+              type="text"
+              onChange={(e) => {
+                setNewComment(e.target.value);
+                setEditting(true);
+              }}
+              className={inputStyling}
+              placeholder="Add a comment..."
+            />
+            {editting && (
+              <div>
+                <Button
+                  text={"Save changes"}
+                  css={getButtonStyling("#0052cc", "white", "", "#005eeb")}
+                  onClick={onSave}
+                />
+                <Button
+                  text={"Cancel"}
+                  css={getButtonStyling("", "", "", "#dfe1e6")}
+                  onClick={onCancel}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
