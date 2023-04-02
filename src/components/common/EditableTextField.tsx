@@ -5,14 +5,16 @@ import { Button, getButtonStyling } from "./Button";
 interface EditableTextFieldProps {
   initValue?: string;
   css?: string;
+  onSubmit: (newVal: string) => any;
 }
 
 export const EditableTextField = ({
-  initValue,
+  initValue = "",
+  onSubmit,
   css,
 }: EditableTextFieldProps) => {
   const [editting, setEditting] = useState(false);
-  const [value, setValue] = useState(initValue);
+  const [value, setValue] = useState(initValue || "");
   const defaultValue = initValue;
 
   const onChange = (e: any) => {
@@ -23,6 +25,7 @@ export const EditableTextField = ({
   };
 
   const onSave = () => {
+    onSubmit(value);
     setEditting(false);
   };
 

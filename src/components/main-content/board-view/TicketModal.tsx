@@ -36,7 +36,6 @@ import { CommentCard } from "../../common/CommentCard";
 import { getAvatarStyling } from "../../../styles/common";
 import { useState } from "react";
 import { Button, getButtonStyling } from "../../common/Button";
-import { report } from "process";
 
 interface TicketModalProps {
   ticketId: string;
@@ -71,9 +70,6 @@ export const TicketModal = ({
 }: TicketModalProps) => {
   const { isLoading: ticketLoading, data: ticket } = useTicket(ticketId);
   const { isLoading: usersLoading, data: userData } = useUsers();
-
-  const [title, setTitle] = useState(ticket?.title);
-  const [description, setDescription] = useState(ticket?.description);
 
   const updateTicketmutation = useUpdateTicketById();
 
@@ -111,6 +107,9 @@ export const TicketModal = ({
         ></div>
         <EditableTextField
           initValue={ticket?.title}
+          onSubmit={(newVal: string) => {
+            updateTicket("title", newVal);
+          }}
           css={getTextAreaStyling(
             "100%",
             "",
@@ -129,6 +128,9 @@ export const TicketModal = ({
             <EditableTextField
               initValue={ticket?.description}
               css={getTextAreaStyling("100%", "100px", "", "15px", "")}
+              onSubmit={(newVal: string) => {
+                updateTicket("description", newVal);
+              }}
             />
           </div>
           <div className={sidePanel}>
