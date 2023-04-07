@@ -6,9 +6,7 @@ import { tickets } from "./apis";
 export const useTickets = () => {
   return useQuery<TicketsRepresentation>(["tickets"], async () => {
     const data = await fetch(tickets);
-    const x = await data.json();
-    console.log("useTickets called");
-    return x;
+    return await data.json();
   });
 };
 
@@ -17,9 +15,7 @@ export const useTicket = (ticketId: string) => {
     ["ticket", ticketId],
     async () => {
       const data = await fetch(tickets + "/" + ticketId);
-      const x = await data.json();
-      console.log("useTicket called");
-      return x;
+      return await data.json();
     },
     { enabled: !!ticketId }
   );
@@ -49,7 +45,6 @@ export const useUpdateTicketById = () => {
 
   return useMutation(updateTicketById, {
     onSuccess: (data, variables: TicketMutationVariables) => {
-      console.log("onSuccess called with " + JSON.stringify(variables));
       queryClient.invalidateQueries(["tickets"]);
       queryClient.invalidateQueries(["ticket", variables.ticketId]);
     },

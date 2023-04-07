@@ -98,10 +98,7 @@ export const BoardView = () => {
           backgroundColor: "white",
         })}
       >
-        <PageHeader
-          projectName="Central Perk Project"
-          pageName="Kanban Board"
-        />
+        <PageHeader pageName="Kanban Board" />
         <div style={{ marginTop: "30px" }}>
           <div className={boardFilters}>
             <TextInput

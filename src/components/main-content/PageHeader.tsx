@@ -1,12 +1,17 @@
 import { css } from "@emotion/css";
+import { useSettings } from "../../services/settings";
 import { grey } from "../../styles/colors";
 
 interface PageHeaderProps {
-  projectName: string;
   pageName: string;
 }
 
-export const PageHeader = ({ projectName, pageName }: PageHeaderProps) => {
+export const PageHeader = ({ pageName }: PageHeaderProps) => {
+  const { data, isLoading } = useSettings();
+  const name = data?.settings.filter(
+    (setting) => setting.setting_name === "projectName"
+  )?.[0]?.setting_value;
+
   return (
     <div>
       <div
@@ -19,7 +24,7 @@ export const PageHeader = ({ projectName, pageName }: PageHeaderProps) => {
           fontSize: "15px",
         })}
       >
-        {["Projects", projectName, pageName].join(" / ")}
+        {["Projects", name, pageName].join(" / ")}
       </div>
       <div
         className={css({
