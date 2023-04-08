@@ -17,7 +17,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
     error,
   } = useUser(comment.user_id);
 
-  return !isLoading ? (
+  return (
     <div
       className={css({ display: "flex", flexDirection: "row", gap: "25px" })}
     >
@@ -43,7 +43,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
               fontFamily: "CircularStdMedium",
             })}
           >
-            {[userInfo!.first_name, userInfo!.last_name].join(" ")}
+            {[userInfo?.first_name, userInfo?.last_name].join(" ")}
           </div>
           <div
             className={css({
@@ -67,7 +67,5 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
         </div>
       </div>
     </div>
-  ) : (
-    <div>Loading</div>
   );
 };
