@@ -213,6 +213,7 @@ const inputStyling = css({
   paddingTop: "1px",
   color: "#172b4d",
   cursor: "pointer",
+  fontFamily: "CircularStdBook",
   "&:hover": {
     border: "1px solid #c1c7d0",
   },

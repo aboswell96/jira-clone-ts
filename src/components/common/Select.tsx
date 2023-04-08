@@ -32,6 +32,7 @@ const itemStyle = css({
   gap: "5px",
   justifyContent: "center",
   height: "inherit",
+  fontFamily: "CircularStdBold",
 });
 
 export const Select = ({ value, items, header, onSelectItem }: SelectProps) => {

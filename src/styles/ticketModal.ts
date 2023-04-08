@@ -23,6 +23,7 @@ export const mainText = css({
   paddingTop: "25px",
   color: "#172b4d",
   marginLeft: "3px",
+  fontFamily: "CircularStdMedium",
 });
 
 export const subText = css({
@@ -30,10 +31,12 @@ export const subText = css({
   color: "#42526E",
   marginTop: "2px",
   marginLeft: "3px",
+  fontFamily: "CircularStdBook",
 });
 
 export const subTitle = css({
   paddingTop: "25px",
   fontSize: "12.5px",
   color: "#172b4d",
+  fontFamily: "CircularStdBold",
 });

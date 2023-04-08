@@ -75,6 +75,7 @@ export const getTextAreaStyling = (
     marginTop: marginTop || "",
     color: "#172b4d",
     resize: "none",
+    fontFamily: "CircularStdBook",
     "&:hover": {
       backgroundColor: "#ebecf0",
     },

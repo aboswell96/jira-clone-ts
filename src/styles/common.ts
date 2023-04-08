@@ -1,5 +1,26 @@
 import { css } from "@emotion/css";
 
+export const boldText = {
+  fontFamily: "CircularStdBold",
+  fontStyle: "normal",
+  fontWeight: "normal",
+  src: `url('/fonts/CircularStd-Bold.woff2')`,
+};
+
+export const bookText = {
+  fontFamily: "CircularStdBook",
+  fontStyle: "normal",
+  fontWeight: "normal",
+  src: 'url("/fonts/CircularStd-Book.woff2") format(truetype)',
+};
+
+export const mediumText = {
+  fontFamily: "CircularStdMedium",
+  fontStyle: "normal",
+  fontWeight: "normal",
+  src: `url('/fonts/CircularStd-Medium.woff2')`,
+};
+
 export const getAvatarStyling = (
   backgroundImg: string,
   size: string,
@@ -34,6 +55,7 @@ export const getTicketStyling = (darkTheme: boolean) => {
     flexDirection: "column",
     gap: "11px",
     color: darkTheme ? "white" : "#172b4d",
+    fontFamily: "CircularStdBook",
     "&:hover": {
       backgroundColor: darkTheme ? "#21262d" : "#ebecf0",
     },

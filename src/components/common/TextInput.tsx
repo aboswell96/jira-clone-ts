@@ -25,6 +25,7 @@ export const TextInput = ({
           borderRadius: "4px",
           outline: "none",
           textIndent: "35px",
+          fontFamily: "CircularStdBook",
         })}
         value={value}
         onChange={onChange}

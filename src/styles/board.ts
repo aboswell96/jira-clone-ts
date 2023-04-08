@@ -24,6 +24,7 @@ export const getBoardFilterStyles = (darkTheme: boolean, active: boolean) => {
       color: grey2,
       borderRadius: "3px",
       fontSize: "14.5px",
+      fontFamily: "CircularStdBook",
       "&:hover": {
         cursor: "pointer",
         backgroundColor: darkTheme ? "#0d1117" : "#F4F5F7",
@@ -61,6 +62,7 @@ export const swimlaneHeader = css({
   marginLeft: "10px",
   color: "#5e6c84",
   fontSize: "12.5px",
+  fontFamily: "CircularStdBook",
 });
 
 export const swimlaneBody = css({

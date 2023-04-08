@@ -27,6 +27,7 @@ export const navigationItem = css({
   backgroundColor: lightGrey,
   color: "black",
   transition: "background 0.1s ease 0s",
+  fontFamily: "CircularStdBook",
 });
 
 export const navigationItemInDevelopment = css({
@@ -51,6 +52,7 @@ export const titleNotImplemented = css({
   borderRadius: "3px",
   fontSize: "11.5px",
   fontWeight: "normal",
+  fontFamily: "CircularStdBook",
 });
 
 export const boardAvatar = css({

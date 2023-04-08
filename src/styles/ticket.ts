@@ -7,4 +7,5 @@ export const ticketType = css({
   gap: "7px",
   alignItems: "center",
   color: "#5e6c84",
+  fontFamily: "CircularStdBook",
 });

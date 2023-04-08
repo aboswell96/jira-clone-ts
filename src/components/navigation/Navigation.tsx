@@ -64,6 +64,7 @@ export const Navigation = () => {
             color: "black",
             margin: "auto",
             marginLeft: "10px",
+            fontFamily: "CircularStdMedium",
           })}
         >
           Central Perk
@@ -137,7 +138,12 @@ const NavigationMenuTab = ({
         <div className={css({ paddingLeft: "10px" })}>
           {renderIcon(icon, active)}
         </div>
-        <div className={css({ color: "black", fontSize: "14.7px" })}>
+        <div
+          className={css({
+            color: active ? "#1976d2" : "black",
+            fontSize: "14.7px",
+          })}
+        >
           {title}
         </div>
       </div>

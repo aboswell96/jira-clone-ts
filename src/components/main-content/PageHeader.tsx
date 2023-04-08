@@ -22,6 +22,7 @@ export const PageHeader = ({ pageName }: PageHeaderProps) => {
           whiteSpace: "nowrap",
           color: grey,
           fontSize: "15px",
+          fontFamily: "CircularStdMedium",
         })}
       >
         {["Projects", name, pageName].join(" / ")}
@@ -31,6 +32,7 @@ export const PageHeader = ({ pageName }: PageHeaderProps) => {
           whiteSpace: "nowrap",
           marginTop: "10px",
           fontSize: "24px",
+          fontFamily: "CircularStdMedium",
         })}
       >
         {pageName}

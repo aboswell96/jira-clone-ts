@@ -40,6 +40,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             className={css({
               fontSize: "15px",
               color: "#42526E",
+              fontFamily: "CircularStdMedium",
             })}
           >
             {[userInfo!.first_name, userInfo!.last_name].join(" ")}
@@ -48,6 +49,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             className={css({
               fontSize: "14.5px",
               color: "#42526E",
+              fontFamily: "CircularStdBook",
             })}
           >
             {moment(Number(comment.time_created)).calendar()}
@@ -58,6 +60,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             fontSize: "15px",
             color: "#42526E",
             paddingTop: "10px",
+            fontFamily: "CircularStdBook",
           })}
         >
           {comment.msg}
