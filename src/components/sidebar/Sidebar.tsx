@@ -12,9 +12,8 @@ export const SideBar = () => {
         position: "absolute",
         zIndex: 1,
         width: "64px",
+        paddingTop: "30px",
       })}
-    >
-      sidebar
-    </div>
+    ></div>
   );
 };

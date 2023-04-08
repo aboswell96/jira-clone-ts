@@ -10,6 +10,7 @@ export const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainContent />}>
+            <Route path="/" element={<BoardView />} />
             <Route path="/board" element={<BoardView />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

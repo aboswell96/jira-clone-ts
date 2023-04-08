@@ -25,6 +25,9 @@ export const getBoardFilterStyles = (darkTheme: boolean, active: boolean) => {
       borderRadius: "3px",
       fontSize: "14.5px",
       fontFamily: "CircularStdBook",
+      display: "flex",
+      alignItems: "center",
+      paddingInline: "10px",
       "&:hover": {
         cursor: "pointer",
         backgroundColor: darkTheme ? "#0d1117" : "#F4F5F7",
