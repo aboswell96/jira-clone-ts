@@ -61,3 +61,26 @@ export const getTicketStyling = (darkTheme: boolean) => {
     },
   });
 };
+
+export const getSiteMenuItemStyling = (expanded?: boolean) => {
+  return css([
+    {
+      width: "auto",
+      height: "40px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: "3px",
+      overflow: "hidden",
+      fontFamily: "CircularStdBook",
+      transition: "background 0.1s ease 0s",
+      cursor: "pointer",
+      "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
+    },
+    expanded && {
+      gap: "15px",
+      justifyContent: "flex-start",
+      paddingLeft: "15px",
+    },
+  ]);
+};

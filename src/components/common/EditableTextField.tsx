@@ -60,27 +60,28 @@ export const getTextAreaStyling = (
   height?: string,
   minHeight?: string,
   fontSize?: string,
-  marginTop?: string
+  marginTop?: string,
+  darkTheme?: boolean
 ) => {
   return css({
     width: width || "",
     height: height || "",
     minHeight: minHeight || "",
-    backgroundColor: "white",
+    backgroundColor: darkTheme ? "#161b22" : "#f4f5f7",
     border: "1px solid white",
     borderRadius: "4px",
     outline: "none",
     fontSize: fontSize,
     paddingTop: "1px",
     marginTop: marginTop || "",
-    color: "#172b4d",
+    color: darkTheme ? "white" : "black",
     resize: "none",
     fontFamily: "CircularStdBook",
     "&:hover": {
-      backgroundColor: "#ebecf0",
+      backgroundColor: darkTheme ? "#21262d" : "#ebecf0",
     },
     "&:focus": {
-      backgroundColor: "white",
+      backgroundColor: darkTheme ? "#21262d" : "white",
       border: "2px solid #4c9aff",
       paddingTop: "0",
       paddingLeft: "1px",

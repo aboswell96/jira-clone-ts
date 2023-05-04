@@ -2,18 +2,19 @@ import { css } from "@emotion/css";
 import { Link } from "react-router-dom";
 import {
   boardAvatar,
-  navigation,
-  navigationItem,
+  getNavigationItemStyling,
+  getNavigationStyling,
   navigationItems,
-} from "../../styles/Navigation";
+} from "../../styles/navigation";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
 import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import DynamicFeedOutlinedIcon from "@mui/icons-material/DynamicFeedOutlined";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { NavigationMenuItemInDev } from "./NavigationMenuItemInDev";
 import { grey } from "../../styles/colors";
+import { ThemeContext } from "../../App";
 
 const menuOptions = [
   {
@@ -45,9 +46,10 @@ const menuOptionsInDevelopment = [
 
 export const Navigation = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const themeContext = useContext(ThemeContext);
 
   return (
-    <div className={navigation}>
+    <div className={getNavigationStyling(themeContext.theme === "dark")}>
       <div className={boardAvatar}>
         <img
           src="https://i.ibb.co/S686zGM/rocket3.png"
@@ -58,10 +60,10 @@ export const Navigation = () => {
             border: "2px",
             borderRadius: "3px",
           }}
-        ></img>
+        />
         <div
           className={css({
-            color: "black",
+            color: themeContext.theme === "light" ? "black" : "white",
             margin: "auto",
             marginLeft: "10px",
             fontFamily: "CircularStdMedium",
@@ -128,19 +130,24 @@ const NavigationMenuTab = ({
   active,
   onTabClick,
 }: NavigationMenuTabProps) => {
+  const themeContext = useContext(ThemeContext);
   return (
     <Link
       to={url}
       className={css({ textDecoration: "none", color: "inherit" })}
       onClick={() => onTabClick()}
     >
-      <div className={navigationItem}>
+      <div className={getNavigationItemStyling(themeContext.theme === "dark")}>
         <div className={css({ paddingLeft: "10px" })}>
           {renderIcon(icon, active)}
         </div>
         <div
           className={css({
-            color: active ? "#1976d2" : "black",
+            color: active
+              ? "#1976d2"
+              : themeContext.theme === "dark"
+              ? "white"
+              : "black",
             fontSize: "14.7px",
           })}
         >

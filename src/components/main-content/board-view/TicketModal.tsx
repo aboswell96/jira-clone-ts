@@ -34,34 +34,15 @@ import { useUsers } from "../../../services/users";
 import { CommentRepresentation } from "../../../types/tickets";
 import { CommentCard } from "../../common/CommentCard";
 import { getAvatarStyling } from "../../../styles/common";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, getButtonStyling } from "../../common/Button";
+import { ThemeContext } from "../../../App";
 
 interface TicketModalProps {
   ticketId: string;
   open: boolean;
   onModalClose: any;
 }
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  pt: 25 / 8,
-  pr: 35 / 8,
-  pb: 25 / 8,
-  pl: 35 / 8,
-  minWidth: 750,
-  //   bgcolor: darkTheme ? "#010409" : "background.paper",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  verticalAlign: "top",
-  transform: "translate(-50%, -50%)",
-  //   border: darkTheme ? "2px solid white" : "",
-  border: "",
-  overflowY: "scroll",
-  maxHeight: "90%",
-};
 
 export const TicketModal = ({
   ticketId,
@@ -70,6 +51,25 @@ export const TicketModal = ({
 }: TicketModalProps) => {
   const { isLoading: ticketLoading, data: ticket } = useTicket(ticketId);
   const { isLoading: usersLoading, data: userData } = useUsers();
+
+  const themeContext = useContext(ThemeContext);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    pt: 25 / 8,
+    pr: 35 / 8,
+    pb: 25 / 8,
+    pl: 35 / 8,
+    minWidth: 750,
+    bgcolor: themeContext.theme === "dark" ? "#010409" : "background.paper",
+    boxShadow: 24,
+    verticalAlign: "top",
+    transform: "translate(-50%, -50%)",
+    border: themeContext.theme === "dark" ? "2px solid white" : "",
+    overflowY: "scroll",
+    maxHeight: "90%",
+  };
 
   const updateTicketmutation = useUpdateTicketById();
 
@@ -115,7 +115,8 @@ export const TicketModal = ({
             "",
             "35px",
             ticket && ticket?.title.length > 60 ? "18px" : "24px",
-            ""
+            "",
+            themeContext.theme === "dark"
           )}
         />
         <div className={ticketPanels}>
@@ -127,7 +128,14 @@ export const TicketModal = ({
             <div className={mainText}>Description</div>
             <EditableTextField
               initValue={ticket?.description}
-              css={getTextAreaStyling("100%", "100px", "", "15px", "")}
+              css={getTextAreaStyling(
+                "100%",
+                "100px",
+                "",
+                "15px",
+                "",
+                themeContext.theme === "dark"
+              )}
               onSubmit={(newVal: string) => {
                 updateTicket("description", newVal);
               }}

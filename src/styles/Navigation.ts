@@ -1,12 +1,14 @@
 import { css } from "@emotion/css";
 import { lightGrey } from "./colors";
 
-export const navigation = css({
-  backgroundColor: lightGrey,
-  width: "230px",
-  marginLeft: "64px",
-  flexShrink: 0,
-});
+export const getNavigationStyling = (darkTheme: boolean) => {
+  return css({
+    backgroundColor: darkTheme ? "#0d1117" : lightGrey,
+    width: "230px",
+    marginLeft: "64px",
+    flexShrink: 0,
+  });
+};
 
 export const navigationItems = css({
   width: "200px",
@@ -15,20 +17,22 @@ export const navigationItems = css({
   paddingTop: "30px",
 });
 
-export const navigationItem = css({
-  width: "100%",
-  height: "40px",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  gap: "15px",
-  borderRadius: "3px",
-  overflow: "hidden",
-  backgroundColor: lightGrey,
-  color: "black",
-  transition: "background 0.1s ease 0s",
-  fontFamily: "CircularStdBook",
-});
+export const getNavigationItemStyling = (darkTheme: boolean) => {
+  return css({
+    width: "100%",
+    height: "40px",
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: "15px",
+    borderRadius: "3px",
+    overflow: "hidden",
+    backgroundColor: darkTheme ? "#0d1117" : lightGrey,
+    color: darkTheme ? "white" : "black",
+    transition: "background 0.1s ease 0s",
+    fontFamily: "CircularStdBook",
+  });
+};
 
 export const navigationItemInDevelopment = css({
   width: "100%",

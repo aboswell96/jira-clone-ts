@@ -2,8 +2,11 @@ import { css } from "@emotion/css";
 import { Outlet } from "react-router-dom";
 import { Navigation } from "../navigation/Navigation";
 import { SideBar } from "../sidebar/Sidebar";
+import { ThemeContext } from "../../App";
+import { useContext } from "react";
 
 export const MainContent = () => {
+  const themeContext = useContext(ThemeContext);
   return (
     <div
       className={css({
@@ -20,10 +23,11 @@ export const MainContent = () => {
       <Navigation />
       <div
         className={css({
-          marginLeft: "40px",
-          marginRight: "40px",
-          marginTop: "30px",
+          paddingLeft: "40px",
+          paddingRight: "40px",
+          paddingTop: "30px",
           width: "100%",
+          backgroundColor: themeContext.theme === "light" ? "white" : "#010409",
         })}
       >
         <Outlet />

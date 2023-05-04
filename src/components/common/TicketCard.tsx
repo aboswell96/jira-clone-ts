@@ -8,6 +8,8 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useUser } from "../../services/users";
 import { unassigned } from "../../utils/utils";
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 
 interface TicketCardProps {
   ticket: TicketRepresentation;
@@ -16,10 +18,10 @@ interface TicketCardProps {
 
 export const TicketCard = ({ ticket, onClick }: TicketCardProps) => {
   const { isLoading, isError, data, error } = useUser(ticket.user_id);
-
+  const themeContext = useContext(ThemeContext);
   return (
     <div
-      className={css(getTicketStyling(false))}
+      className={css(getTicketStyling(themeContext.theme === "dark"))}
       onClick={() => {
         onClick(ticket.id);
       }}

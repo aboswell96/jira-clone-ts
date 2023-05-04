@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useUsers } from "../../../services/users";
 import { boardFilters, getBoardFilterStyles } from "../../../styles/board";
 import { TextInput } from "../../common/TextInput";
@@ -10,12 +10,15 @@ import { Swimlane } from "./Swimlane";
 import { useTickets } from "../../../services/tickets";
 import { processingUser, swimlanes } from "../../../utils/utils";
 import { TicketModal } from "./TicketModal";
+import { ThemeContext } from "../../../App";
 
 export const BoardView = () => {
   const [searchInput, setSearchInput] = useState("");
   const [userFilter, setUserFilter] = useState("");
   const [onlyMyIssues, setOnlyMyIssues] = useState(false);
   const [recentlyUpdated, setRecentlyUpdated] = useState(false);
+
+  const themeContext = useContext(ThemeContext);
 
   const [selectedTicket, setSelectedTicket] = useState("");
   const [open, setOpen] = useState(false);
@@ -95,7 +98,7 @@ export const BoardView = () => {
       <div
         className={css({
           width: "auto",
-          backgroundColor: "white",
+          backgroundColor: themeContext.theme === "light" ? "white" : "dark",
         })}
       >
         <PageHeader pageName="Kanban Board" />
@@ -112,7 +115,10 @@ export const BoardView = () => {
               {usersLoading ? loadingUsers : userAvatars}
             </div>
             <div
-              className={getBoardFilterStyles(false, onlyMyIssues)}
+              className={getBoardFilterStyles(
+                themeContext.theme === "dark",
+                onlyMyIssues
+              )}
               onClick={() => {
                 setOnlyMyIssues(!onlyMyIssues);
               }}
@@ -120,7 +126,10 @@ export const BoardView = () => {
               Only My Issues
             </div>
             <div
-              className={getBoardFilterStyles(false, recentlyUpdated)}
+              className={getBoardFilterStyles(
+                themeContext.theme === "dark",
+                recentlyUpdated
+              )}
               onClick={() => {
                 setRecentlyUpdated(!recentlyUpdated);
               }}
@@ -130,7 +139,10 @@ export const BoardView = () => {
             {filterActive && <Divider orientation="vertical" flexItem />}
             {filterActive && (
               <div
-                className={getBoardFilterStyles(false, false)}
+                className={getBoardFilterStyles(
+                  themeContext.theme === "dark",
+                  false
+                )}
                 onClick={() => {
                   clearFilters();
                 }}
